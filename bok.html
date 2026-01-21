@@ -3,322 +3,286 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Logisian | Premium Welfare</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>Logisian | Next-Level Welfare</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
             --main-blue: #004691;
             --sub-blue: #00AEEF;
-            --bg-color: #f4f7fa;
-            --card-white: #ffffff;
-            --text-title: #1a1a1a;
-            --text-body: #4a4a4a;
-            --accent-orange: #ff7e5f;
+            --deep-dark: #0a0e14;
+            --glass-white: rgba(255, 255, 255, 0.9);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-body);
-            line-height: 1.7;
+            background-color: #fbfcfd;
+            color: #333;
             overflow-x: hidden;
+            perspective: 1000px; /* 3D 효과를 위한 원근감 설정 */
         }
 
-        /* Hero Section */
-        .welfare-header {
-            background: linear-gradient(rgba(0, 70, 145, 0.8), rgba(0, 70, 145, 0.8)), 
-                        url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); /* 물류 센터 배경 이미지 */
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 100px 20px;
-            text-align: center;
-        }
-
-        .welfare-header h1 {
-            font-size: clamp(1.8rem, 5vw, 2.8rem);
-            font-weight: 700;
-            margin-bottom: 15px;
-            letter-spacing: -1px;
-        }
-
-        .welfare-header p {
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            opacity: 0.9;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        /* Container */
-        .content-wrapper {
-            max-width: 1200px;
-            margin: -60px auto 100px;
-            padding: 0 20px;
-        }
-
-        /* Section Layout */
-        .section-container {
-            margin-bottom: 50px;
-        }
-
-        .section-title {
-            display: flex;
-            align-items: center;
-            font-size: 1.5rem;
-            color: var(--main-blue);
-            font-weight: 700;
-            margin-bottom: 25px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #ddd;
-        }
-
-        .section-title span {
-            background: var(--main-blue);
-            color: white;
-            padding: 2px 12px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-right: 12px;
-        }
-
-        /* Grid System (Responsive) */
-        .welfare-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        /* Benefit Card */
-        .card {
-            background: var(--card-white);
-            border-radius: 16px;
-            padding: 35px 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-            position: relative;
+        /* Hero Section with Glassmorphism */
+        .hero {
+            height: 60vh;
+            background: radial-gradient(circle at top right, #0056b3, #001a33);
             display: flex;
             flex-direction: column;
-            border: 1px solid rgba(0,0,0,0.03);
+            justify-content: center;
+            align-items: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
         }
 
-        .card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 15px 40px rgba(0, 70, 145, 0.15);
-            border-color: var(--sub-blue);
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: url('https://www.transparenttextures.com/patterns/cubes.png');
+            opacity: 0.1;
+            animation: rotate 100s linear infinite;
         }
 
-        .card-icon {
-            font-size: 2.5rem;
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            z-index: 1;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.3);
             margin-bottom: 20px;
-            display: block;
         }
 
-        .card h3 {
-            font-size: 1.25rem;
+        /* Container & Grid */
+        .main-container {
+            max-width: 1200px;
+            margin: -100px auto 100px;
+            padding: 0 20px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .category-wrapper { margin-bottom: 80px; }
+
+        .category-header {
+            margin-bottom: 40px;
+            text-align: center;
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .category-header h2 {
+            font-size: 2rem;
+            color: var(--main-blue);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .category-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--sub-blue);
+            border-radius: 2px;
+        }
+
+        /* 3D Motion Card Grid */
+        .welfare-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        /* The 3D Card */
+        .card-3d {
+            background: var(--glass-white);
+            border-radius: 24px;
+            padding: 40px 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+            border: 1px solid rgba(255,255,255,0.4);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            position: relative;
+        }
+
+        /* 마우스 오버 시 3D 기울기 효과 */
+        .card-3d:hover {
+            transform: rotateX(5deg) rotateY(-5deg) translateY(-15px);
+            box-shadow: 20px 20px 60px rgba(0, 70, 145, 0.15);
+        }
+
+        .card-3d::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            border-radius: 24px;
+            background: linear-gradient(135deg, rgba(0,174,239,0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .card-3d:hover::before { opacity: 1; }
+
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            background: #eef6ff;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            transform: translateZ(30px); /* 아이콘이 더 튀어나와 보이게 */
+        }
+
+        .card-3d h3 {
+            font-size: 1.4rem;
             color: var(--main-blue);
             margin-bottom: 15px;
-            font-weight: 700;
+            transform: translateZ(20px);
         }
 
-        .card ul {
-            list-style: none;
+        .card-content {
             font-size: 0.95rem;
-            color: var(--text-body);
+            color: #666;
+            line-height: 1.8;
+            transform: translateZ(10px);
         }
 
-        .card ul li {
-            position: relative;
-            padding-left: 18px;
-            margin-bottom: 8px;
-        }
-
-        .card ul li::before {
-            content: '•';
-            position: absolute;
-            left: 0;
-            color: var(--sub-blue);
-            font-weight: bold;
-        }
-
-        .highlight-text {
-            color: var(--sub-blue);
+        .card-content span {
+            display: block;
+            margin-top: 10px;
             font-weight: 600;
+            color: var(--sub-blue);
         }
 
-        /* Floating Badge for Key Benefits */
-        .card .badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: #eef6ff;
-            color: var(--main-blue);
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 600;
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Footer Info */
-        .footer-notice {
-            text-align: center;
-            margin-top: 50px;
-            color: #999;
-            font-size: 0.9rem;
-        }
-
-        /* Mobile Responsive Adjustments */
-        @media (max-width: 600px) {
-            .welfare-header { padding: 60px 20px; }
-            .content-wrapper { margin-top: -30px; }
-            .card { padding: 25px 20px; }
+        /* Responsive Mobile */
+        @media (max-width: 768px) {
+            .hero { height: 40vh; }
+            .main-container { margin-top: -50px; }
+            .welfare-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <header class="welfare-header">
-        <h1>People First, Logisian</h1>
-        <p>로지션은 구성원의 열정과 성장을 응원하며,<br>함께 더 나은 미래를 만들어가는 최적의 복지 환경을 제공합니다.</p>
-    </header>
+    <section class="hero">
+        <h1 style="letter-spacing: 2px;">LOGISIAN</h1>
+        <p style="font-weight: 300; letter-spacing: 4px;">PREMIUM WELFARE SYSTEM</p>
+    </section>
 
-    <main class="content-wrapper">
+    <main class="main-container">
         
-        <section class="section-container">
-            <h2 class="section-title"><span>01</span> 건강 및 생활안전</h2>
+        <div class="category-wrapper">
+            <div class="category-header">
+                <h2>Health & Safety</h2>
+            </div>
             <div class="welfare-grid">
-                <div class="card">
-                    <span class="card-icon">🛡️</span>
-                    <h3>사회보장제도</h3>
-                    <ul>
-                        <li>4대보험 (국민·건강·고용·산재)</li>
-                        <li>업무 중 사고 대비 <span class="highlight-text">근재보험 가입</span></li>
-                    </ul>
+                <div class="card-3d">
+                    <div class="icon-box">🏥</div>
+                    <h3>종합 건강검진</h3>
+                    <div class="card-content">
+                        전 사원 대상 일반검진은 물론, 과장급 이상 임직원께는 <br><strong>격년 1회 종합검진비(20만원)</strong>를 지원합니다.
+                    </div>
                 </div>
-                <div class="card">
-                    <span class="card-icon">🏥</span>
-                    <h3>건강검진 지원</h3>
-                    <span class="badge">검진비 지원</span>
-                    <ul>
-                        <li>전 사원 일반검진 (현장직 매년 1회)</li>
-                        <li>과장급 이상 <span class="highlight-text">종합검진 지원</span> (격년 20만원)</li>
-                    </ul>
+                <div class="card-3d">
+                    <div class="icon-box">🛡️</div>
+                    <h3>안심 케어 시스템</h3>
+                    <div class="card-content">
+                        4대 보험을 넘어 업무 중 발생할 수 있는 사고까지 책임지기 위해 <strong>전 직원 근재보험 가입</strong>을 필수로 진행합니다.
+                    </div>
                 </div>
-                <div class="card">
-                    <span class="card-icon">👕</span>
-                    <h3>유니폼 & 장비</h3>
-                    <ul>
-                        <li>동계점퍼 및 춘추/하복 티셔츠 지급</li>
-                        <li>안전화 연 1족 및 개인 안전장구 지원</li>
-                    </ul>
+                <div class="card-3d">
+                    <div class="icon-box">👕</div>
+                    <h3>프리미엄 기어</h3>
+                    <div class="card-content">
+                        계절별 유니폼과 최고 사양의 안전화 및 개인 장구를 지급하여 최적의 근무 환경을 조성합니다.
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section class="section-container">
-            <h2 class="section-title"><span>02</span> 보상 및 장기근속</h2>
+        <div class="category-wrapper">
+            <div class="category-header">
+                <h2>Growth & Reward</h2>
+            </div>
             <div class="welfare-grid">
-                <div class="card">
-                    <span class="card-icon">🎁</span>
-                    <h3>장기근속 포상</h3>
-                    <span class="badge">최대 200만원</span>
-                    <ul>
-                        <li>5년: 휴가 1일 + 10만원</li>
-                        <li>10년: <span class="highlight-text">휴가 5일 + 100만원</span></li>
-                        <li>20년: <span class="highlight-text">휴가 10일 + 200만원</span></li>
-                    </ul>
+                <div class="card-3d">
+                    <div class="icon-box">💎</div>
+                    <h3>장기근속 마일스톤</h3>
+                    <div class="card-content">
+                        로지션과 함께한 시간을 기립니다.
+                        <span>• 10년: 리프레시 휴가 5일 + 100만원</span>
+                        <span>• 20년: 리프레시 휴가 10일 + 200만원</span>
+                    </div>
                 </div>
-                <div class="card">
-                    <span class="card-icon">💡</span>
-                    <h3>성과/발명 포상</h3>
-                    <ul>
-                        <li>직무 아이디어 기여 시 수익금 보상</li>
-                        <li>특허 등록 시 <span class="highlight-text">100만원 지급</span></li>
-                        <li>영업 성과 및 무재해 사업장 포상</li>
-                    </ul>
+                <div class="card-3d">
+                    <div class="icon-box">🎓</div>
+                    <h3>인재 육성 학자금</h3>
+                    <div class="card-content">
+                        일학습병행제 본인 부담금 전액 지원 및 대학원 과정 연 100만원 지원을 통해 전문가로의 성장을 돕습니다.
+                    </div>
                 </div>
-                <div class="card">
-                    <span class="card-icon">💰</span>
-                    <h3>퇴직 및 연차</h3>
-                    <ul>
-                        <li>퇴직연금제도 안정적 운영</li>
-                        <li>법정 연차 휴가 보장 및 자유로운 사용</li>
-                    </ul>
+                <div class="card-3d">
+                    <div class="icon-box">💡</div>
+                    <h3>직무발명 인센티브</h3>
+                    <div class="card-content">
+                        창의적인 아이디어가 특허로 연결될 시 <strong>건당 100만원</strong>의 포상금과 수익 공유 혜택을 드립니다.
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section class="section-container">
-            <h2 class="section-title"><span>03</span> 자기계발 및 성장</h2>
+        <div class="category-wrapper">
+            <div class="category-header">
+                <h2>Special Benefits</h2>
+            </div>
             <div class="welfare-grid">
-                <div class="card">
-                    <span class="card-icon">🎓</span>
-                    <h3>학자금 지원</h3>
-                    <ul>
-                        <li><span class="highlight-text">일학습병행제</span> 수업료/교재비 전액</li>
-                        <li>계약학과(학/석사) 기업 부담금 지원</li>
-                        <li>대학원 연 100만원 지원 (5년 이상)</li>
-                    </ul>
+                <div class="card-3d">
+                    <div class="icon-box">🚚</div>
+                    <h3>에너지 업! 푸드트럭</h3>
+                    <div class="card-content">
+                        혹서기 및 성수기, 로지션이 직접 현장으로 찾아가 시원한 커피와 간식을 제공하는 <strong>푸드트럭 이벤트</strong>를 운영합니다.
+                    </div>
                 </div>
-                <div class="card">
-                    <span class="card-icon">📜</span>
-                    <h3>자격증 인센티브</h3>
-                    <span class="badge">1회 20만원</span>
-                    <ul>
-                        <li>물류관리사, 관세사, 유통관리사 등</li>
-                        <li>산업안전(산업)기사 등 직무 자격증</li>
-                    </ul>
+                <div class="card-3d">
+                    <div class="icon-box">🏫</div>
+                    <h3>자녀 입학 축하금</h3>
+                    <div class="card-content">
+                        임직원 자녀의 새로운 시작을 축하하며 대학 입학 시 <strong>50만원의 축하금</strong>을 지원합니다.
+                    </div>
+                </div>
+                <div class="card-3d">
+                    <div class="icon-box">🏅</div>
+                    <h3>자격증 취득 지원</h3>
+                    <div class="card-content">
+                        물류관리사, 산업안전기사 등 직무 관련 전문 자격증 취득 시 <strong>1회 20만원</strong>의 인센티브를 지급합니다.
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section class="section-container">
-            <h2 class="section-title"><span>04</span> 생활 밀착형 복지</h2>
-            <div class="welfare-grid">
-                <div class="card">
-                    <span class="card-icon">🎉</span>
-                    <h3>가족 & 기념일</h3>
-                    <ul>
-                        <li>경조 휴가 및 경조금 지원 (3개월 이상)</li>
-                        <li>생일자 <span class="highlight-text">기프티콘 발송</span></li>
-                        <li>자녀 대학 입학 축하금 50만원</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <span class="card-icon">☕</span>
-                    <h3>이벤트 & 동호회</h3>
-                    <ul>
-                        <li>혹서기 <span class="highlight-text">푸드트럭(커피/간식)</span> 운영</li>
-                        <li>영화관람 등 문화 이벤트 지원</li>
-                        <li>사내 동호회 활동비 지원 (월 3만원/인)</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <span class="card-icon">🍱</span>
-                    <h3>식사 및 교통</h3>
-                    <ul>
-                        <li>사업장별 중/석식 지원 및 식대 제공</li>
-                        <li>통근차량 운영 및 교통비 지원</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <span class="card-icon">🧧</span>
-                    <h3>명절 상여/선물</h3>
-                    <ul>
-                        <li>설/추석 명절 상여금 지급</li>
-                        <li>성과에 따른 실속 있는 명절 선물 제공</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <p class="footer-notice">※ 본 복리후생 제도는 회사 규정 및 사업장 상황에 따라 일부 변경되거나 차등 적용될 수 있습니다.</p>
     </main>
+
+    <footer style="text-align: center; padding-bottom: 50px; opacity: 0.5; font-size: 0.8rem;">
+        © Logisian Co., Ltd. All Rights Reserved.
+    </footer>
 
 </body>
 </html>
