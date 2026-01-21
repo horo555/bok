@@ -2,30 +2,30 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Logisian | Welfare System</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Montserrat:wght@800&display=swap" rel="stylesheet">
     <style>
         :root {
             --main-blue: #004691;
             --sub-blue: #00AEEF;
-            --bg-light: #f8fafe;
-            --text-dark: #1e293b;
+            --bg-light: #f4f7fa;
+            --card-white: #ffffff;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         
         body {
             font-family: 'Noto Sans KR', sans-serif;
             background-color: var(--bg-light);
-            color: var(--text-dark);
+            color: #333;
             overflow-x: hidden;
-            word-break: keep-all;
+            line-height: 1.6;
         }
 
-        /* 1. 상단부 높이 단축 및 가독성 개선 */
+        /* 1. 상단부(Hero): 높이 축소 및 3D 입체감 강화 */
         .hero {
-            height: 35vh; /* 높이 축소 */
+            height: 35vh; /* 높이 조절 */
             min-height: 250px;
             background: linear-gradient(135deg, #001a33 0%, #004691 100%);
             display: flex;
@@ -33,122 +33,140 @@
             justify-content: center;
             align-items: center;
             color: white;
+            position: relative;
+            overflow: hidden;
             text-align: center;
-            padding: 0 20px;
+        }
+
+        /* 배경 3D 패턴 효과 */
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 200%; height: 200%;
+            background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), 
+                              linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: perspective(500px) rotateX(60deg);
+            bottom: -50%;
+            opacity: 0.3;
         }
 
         .hero h1 {
             font-family: 'Montserrat', sans-serif;
             font-size: clamp(2rem, 6vw, 3.5rem);
+            z-index: 1;
+            letter-spacing: 4px;
             margin-bottom: 10px;
-            letter-spacing: 2px;
         }
 
         .hero p {
+            font-size: 1rem;
             font-weight: 300;
             letter-spacing: 2px;
-            font-size: 0.9rem;
             opacity: 0.8;
+            z-index: 1;
         }
 
-        /* 2. 메인 컨테이너 */
+        /* 2. 메인 컨테이너 레이아웃 */
         .main-container {
             max-width: 1200px;
-            margin: -40px auto 100px;
+            margin: 40px auto 100px; /* 상단 겹침 방지를 위해 여백 조정 */
             padding: 0 20px;
         }
 
-        .category-wrapper { margin-bottom: 60px; }
+        .category-wrapper { margin-bottom: 80px; }
 
-        /* 배경색과 겹침 방지를 위한 타이틀 디자인 변경 */
         .category-header {
-            margin-bottom: 35px;
-            padding-top: 20px;
+            margin-bottom: 40px;
+            text-align: center;
         }
 
         .category-header h2 {
-            font-size: 1.8rem;
+            font-size: 2rem;
             color: var(--main-blue);
-            display: inline-block;
             position: relative;
-            padding-bottom: 8px;
-            z-index: 1;
+            display: inline-block;
+            padding-bottom: 15px;
         }
 
         .category-header h2::after {
             content: '';
             position: absolute;
-            left: 0; bottom: 0;
-            width: 100%; height: 4px;
+            bottom: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 50px; height: 4px;
             background: var(--sub-blue);
-            border-radius: 2px;
         }
 
-        /* 3. 3D 카드 그리드 (반응형 프레임 최적화) */
+        /* 3. 명확한 3D 카드 시스템 */
         .welfare-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-            perspective: 1200px; /* 3D 원근감 명확화 */
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            perspective: 2000px; /* 카드 기울기를 위한 원근감 */
         }
 
-        /* 4. 명확한 3D 틸트 카드 */
         .card-3d {
-            background: #ffffff;
+            background: var(--card-white);
             border-radius: 20px;
-            padding: 35px 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            position: relative;
-            transform-style: preserve-3d; /* 내부 요소 입체화 */
-            transition: transform 0.1s ease-out; /* JS와 연동하여 부드럽게 */
-            will-change: transform;
-            border: 1px solid rgba(0, 70, 145, 0.05);
-            display: flex;
-            flex-direction: column;
-            opacity: 0; /* 초기 페이드인 대기 */
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            border: 1px solid rgba(0,70,145,0.05);
+            opacity: 0; /* 페이드인 대기 */
             transform: translateY(30px);
         }
 
-        /* 페이드인 활성화 클래스 */
-        .card-3d.reveal {
+        /* 스크롤 시 나타나는 효과 클래스 */
+        .card-3d.show {
             opacity: 1;
             transform: translateY(0);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .card-3d:hover {
+            transform: rotateY(10deg) rotateX(5deg) translateY(-10px);
+            box-shadow: 25px 25px 50px rgba(0, 70, 145, 0.1);
+            border-color: var(--sub-blue);
         }
 
         .icon-box {
-            width: 55px; height: 55px;
+            width: 60px; height: 60px;
             background: #f0f7ff;
-            border-radius: 14px;
+            border-radius: 15px;
             display: flex; align-items: center; justify-content: center;
             font-size: 1.8rem;
-            margin-bottom: 20px;
-            transform: translateZ(40px); /* 아이콘을 앞으로 튀어나오게 */
+            margin-bottom: 25px;
+            transform: translateZ(50px); /* 아이콘이 공중에 뜬 효과 */
         }
 
         .card-3d h3 {
             font-size: 1.3rem;
             color: var(--main-blue);
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             transform: translateZ(30px);
         }
 
         .card-content {
             font-size: 0.95rem;
-            color: #555;
-            line-height: 1.7;
+            color: #666;
             transform: translateZ(20px);
         }
 
-        .card-content strong { color: var(--sub-blue); }
+        .card-content ul { list-style: none; }
+        .card-content li { margin-bottom: 6px; padding-left: 15px; position: relative; }
+        .card-content li::before {
+            content: "•"; color: var(--sub-blue);
+            position: absolute; left: 0; font-weight: bold;
+        }
 
-        /* 모바일 프레임 대응 (미디어 쿼리) */
-        @media (max-width: 1024px) { .welfare-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 650px) {
-            .welfare-grid { grid-template-columns: 1fr; }
+        .highlight { color: var(--sub-blue); font-weight: 600; }
+
+        /* 모바일 최적화 */
+        @media (max-width: 768px) {
             .hero { height: 30vh; }
-            .category-header { text-align: center; }
-            .card-3d { padding: 30px 20px; }
+            .welfare-grid { grid-template-columns: 1fr; }
+            .card-3d:hover { transform: translateY(-5px); } /* 모바일은 3D 생략 */
         }
     </style>
 </head>
@@ -168,18 +186,35 @@
             <div class="welfare-grid">
                 <div class="card-3d">
                     <div class="icon-box">🏥</div>
-                    <h3>건강검진 지원</h3>
-                    <div class="card-content">전 사원 일반검진은 물론, 과장급 이상 임직원 대상 <strong>격년 1회 종합검진(20만원)</strong>을 지원합니다.</div>
+                    <h3>정기 건강검진 지원</h3>
+                    <div class="card-content">
+                        <ul>
+                            <li>전 사원 국가 일반검진 시행 (현장직 매년)</li>
+                            <li>과장급 이상 임직원 <span class="highlight">격년 종합검진(20만원)</span></li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="card-3d">
                     <div class="icon-box">🛡️</div>
-                    <h3>안전 보장 보험</h3>
-                    <div class="card-content">기본 4대 보험과 더불어 예기치 못한 사고에 대비한 <strong>근재보험 가입</strong>으로 임직원을 보호합니다.</div>
+                    <h3>안심 보험 시스템</h3>
+                    <div class="card-content">
+                        <ul>
+                            <li>4대 보험 (국민, 건강, 고용, 산재) 전원 가입</li>
+                            <li>업무 중 사고 대비 <span class="highlight">근재보험 별도 가입</span></li>
+                            <li>안정적인 퇴직연금 제도 운영</li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="card-3d">
                     <div class="icon-box">👕</div>
-                    <h3>근무 장비 지급</h3>
-                    <div class="card-content">계절별 유니폼과 <strong>안전화(연 1족)</strong> 및 필수 안전 보호구를 사업장 상황에 맞춰 지급합니다.</div>
+                    <h3>근무 환경 지원</h3>
+                    <div class="card-content">
+                        <ul>
+                            <li>계절별 고기능성 유니폼 지급 (동계/춘추/하복)</li>
+                            <li><span class="highlight">안전화 연 1족</span> 및 필수 개인 안전보호구 지급</li>
+                            <li>사업장별 통근차량 또는 교통비 지원</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -191,65 +226,107 @@
             <div class="welfare-grid">
                 <div class="card-3d">
                     <div class="icon-box">💎</div>
-                    <h3>장기근속 포상</h3>
+                    <h3>장기근속 마일스톤</h3>
                     <div class="card-content">
-                        <strong>10년: 휴가 5일 + 100만원</strong><br>
-                        <strong>20년: 휴가 10일 + 200만원</strong><br>
-                        함께한 헌신에 보답합니다.
+                        <ul>
+                            <li>5년: 휴가 1일 + 상품권 10만원</li>
+                            <li>10년: <span class="highlight">휴가 5일 + 여행권 100만원</span></li>
+                            <li>20년: <span class="highlight">휴가 10일 + 여행권 200만원</span></li>
+                        </ul>
                     </div>
                 </div>
                 <div class="card-3d">
                     <div class="icon-box">🎓</div>
-                    <h3>인재 육성 지원</h3>
-                    <div class="card-content">일학습병행제 본인 부담금 전액 및 <strong>대학원 과정 연 100만원</strong> 지원을 통해 성장을 돕습니다.</div>
+                    <h3>학자금 및 자기계발</h3>
+                    <div class="card-content">
+                        <ul>
+                            <li>일학습병행제 <span class="highlight">수업료 및 교재비 전액</span></li>
+                            <li>계약학과 학/석사 기업 부담금 지원</li>
+                            <li>과장급 이상 대학원 학비 연 100만원 지원</li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="card-3d">
                     <div class="icon-box">💡</div>
-                    <h3>직무발명 포상</h3>
-                    <div class="card-content">창의적 아이디어로 특허 등록 시 <strong>100만원의 포상금</strong>과 수익 기여에 따른 성과 보상을 제공합니다.</div>
+                    <h3>성과 및 혁신 포상</h3>
+                    <div class="card-content">
+                        <ul>
+                            <li>직무발명/특허 등록 시 <span class="highlight">건당 100만원</span></li>
+                            <li>영업 및 수익 기여 시 일정 성과금 보상</li>
+                            <li>성과우수 및 무재해 사업장 정기 포상</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-wrapper">
+            <div class="category-header">
+                <h2>Life & Culture</h2>
+            </div>
+            <div class="welfare-grid">
+                <div class="card-3d">
+                    <div class="icon-box">🎉</div>
+                    <h3>가족 및 생활 지원</h3>
+                    <div class="card-content">
+                        <ul>
+                            <li>경조금 및 특별 유급휴가 지원 (3개월 이상)</li>
+                            <li><span class="highlight">자녀 대학 입학 축하금 50만원</span></li>
+                            <li>명절 상여금 및 성과 맞춤형 선물 지급</li>
+                            <li>생일 기프티콘 발송</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-3d">
+                    <div class="icon-box">🍱</div>
+                    <h3>식사 및 여가 지원</h3>
+                    <div class="card-content">
+                        <ul>
+                            <li>중식/석식 제공 또는 식대 전액 지원</li>
+                            <li><span class="highlight">사내 동호회 지원 (인당 월 3만원)</span></li>
+                            <li>연차 유급휴가 보장 및 자유로운 사용</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-3d">
+                    <div class="icon-box">🚚</div>
+                    <h3>로지션 스페셜 이벤트</h3>
+                    <div class="card-content">
+                        <ul>
+                            <li>혹서기/성수기 <span class="highlight">커피 & 간식 푸드트럭</span> 운영</li>
+                            <li>영화관람, 다과 등 시즌별 깜짝 이벤트</li>
+                            <li>전문적 LOGI-IT 시스템 활용 업무 환경</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
 
     </main>
 
+    <footer style="text-align: center; padding: 50px 0; color: #aaa; font-size: 0.85rem; background: #fff; border-top: 1px solid #eee;">
+        © Logisian Co., Ltd. All Rights Reserved.
+    </footer>
+
     <script>
-        // 1. 스크롤 페이드인 (Intersection Observer)
+        // 스크롤 시 카드가 하나씩 나타나는 효과
+        const observerOptions = {
+            threshold: 0.1
+        };
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry, index) => {
                 if (entry.isIntersecting) {
-                    // 순차적으로 나타나도록 딜레이 추가
                     setTimeout(() => {
-                        entry.target.classList.add('reveal');
-                    }, index * 100);
+                        entry.target.classList.add('show');
+                    }, index * 100); // 0.1초 간격으로 순차 등장
                 }
             });
-        }, { threshold: 0.1 });
+        }, observerOptions);
 
-        document.querySelectorAll('.card-3d').forEach(card => observer.observe(card));
-
-        // 2. 명확한 3D 틸트 효과 (Desktop 전용, Mobile 제외로 프레임 보호)
-        if (window.innerWidth > 768) {
-            document.querySelectorAll('.card-3d').forEach(card => {
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    
-                    const rotateX = (centerY - y) / 10; // 기울기 강도
-                    const rotateY = (x - centerX) / 10;
-                    
-                    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
-                });
-
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = `rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-                });
-            });
-        }
+        document.querySelectorAll('.card-3d').forEach(card => {
+            observer.observe(card);
+        });
     </script>
 </body>
 </html>
