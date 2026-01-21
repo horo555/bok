@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Logisian | Welfare System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Montserrat:wght@800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main-blue: #004691;
+            --sub-blue: #00AEEF;
+            --bg-light: #f8fafe;
+            --text-dark: #1e293b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            word-break: keep-all;
+        }
+
+        /* 1. 상단부 높이 단축 및 가독성 개선 */
+        .hero {
+            height: 35vh; /* 높이 축소 */
+            min-height: 250px;
+            background: linear-gradient(135deg, #001a33 0%, #004691 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-weight: 300;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* 2. 메인 컨테이너 */
+        .main-container {
+            max-width: 1200px;
+            margin: -40px auto 100px;
+            padding: 0 20px;
+        }
+
+        .category-wrapper { margin-bottom: 60px; }
+
+        /* 배경색과 겹침 방지를 위한 타이틀 디자인 변경 */
+        .category-header {
+            margin-bottom: 35px;
+            padding-top: 20px;
+        }
+
+        .category-header h2 {
+            font-size: 1.8rem;
+            color: var(--main-blue);
+            display: inline-block;
+            position: relative;
+            padding-bottom: 8px;
+            z-index: 1;
+        }
+
+        .category-header h2::after {
+            content: '';
+            position: absolute;
+            left: 0; bottom: 0;
+            width: 100%; height: 4px;
+            background: var(--sub-blue);
+            border-radius: 2px;
+        }
+
+        /* 3. 3D 카드 그리드 (반응형 프레임 최적화) */
+        .welfare-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            perspective: 1200px; /* 3D 원근감 명확화 */
+        }
+
+        /* 4. 명확한 3D 틸트 카드 */
+        .card-3d {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 35px 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            position: relative;
+            transform-style: preserve-3d; /* 내부 요소 입체화 */
+            transition: transform 0.1s ease-out; /* JS와 연동하여 부드럽게 */
+            will-change: transform;
+            border: 1px solid rgba(0, 70, 145, 0.05);
+            display: flex;
+            flex-direction: column;
+            opacity: 0; /* 초기 페이드인 대기 */
+            transform: translateY(30px);
+        }
+
+        /* 페이드인 활성화 클래스 */
+        .card-3d.reveal {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .icon-box {
+            width: 55px; height: 55px;
+            background: #f0f7ff;
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            transform: translateZ(40px); /* 아이콘을 앞으로 튀어나오게 */
+        }
+
+        .card-3d h3 {
+            font-size: 1.3rem;
+            color: var(--main-blue);
+            margin-bottom: 12px;
+            transform: translateZ(30px);
+        }
+
+        .card-content {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.7;
+            transform: translateZ(20px);
+        }
+
+        .card-content strong { color: var(--sub-blue); }
+
+        /* 모바일 프레임 대응 (미디어 쿼리) */
+        @media (max-width: 1024px) { .welfare-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 650px) {
+            .welfare-grid { grid-template-columns: 1fr; }
+            .hero { height: 30vh; }
+            .category-header { text-align: center; }
+            .card-3d { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <h1>LOGISIAN</h1>
+        <p>LOGISTICS SOLUTION PARTNER</p>
+    </section>
+
+    <main class="main-container">
+        
+        <div class="category-wrapper">
+            <div class="category-header">
+                <h2>Health & Safety</h2>
+            </div>
+            <div class="welfare-grid">
+                <div class="card-3d">
+                    <div class="icon-box">🏥</div>
+                    <h3>건강검진 지원</h3>
+                    <div class="card-content">전 사원 일반검진은 물론, 과장급 이상 임직원 대상 <strong>격년 1회 종합검진(20만원)</strong>을 지원합니다.</div>
+                </div>
+                <div class="card-3d">
+                    <div class="icon-box">🛡️</div>
+                    <h3>안전 보장 보험</h3>
+                    <div class="card-content">기본 4대 보험과 더불어 예기치 못한 사고에 대비한 <strong>근재보험 가입</strong>으로 임직원을 보호합니다.</div>
+                </div>
+                <div class="card-3d">
+                    <div class="icon-box">👕</div>
+                    <h3>근무 장비 지급</h3>
+                    <div class="card-content">계절별 유니폼과 <strong>안전화(연 1족)</strong> 및 필수 안전 보호구를 사업장 상황에 맞춰 지급합니다.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-wrapper">
+            <div class="category-header">
+                <h2>Growth & Reward</h2>
+            </div>
+            <div class="welfare-grid">
+                <div class="card-3d">
+                    <div class="icon-box">💎</div>
+                    <h3>장기근속 포상</h3>
+                    <div class="card-content">
+                        <strong>10년: 휴가 5일 + 100만원</strong><br>
+                        <strong>20년: 휴가 10일 + 200만원</strong><br>
+                        함께한 헌신에 보답합니다.
+                    </div>
+                </div>
+                <div class="card-3d">
+                    <div class="icon-box">🎓</div>
+                    <h3>인재 육성 지원</h3>
+                    <div class="card-content">일학습병행제 본인 부담금 전액 및 <strong>대학원 과정 연 100만원</strong> 지원을 통해 성장을 돕습니다.</div>
+                </div>
+                <div class="card-3d">
+                    <div class="icon-box">💡</div>
+                    <h3>직무발명 포상</h3>
+                    <div class="card-content">창의적 아이디어로 특허 등록 시 <strong>100만원의 포상금</strong>과 수익 기여에 따른 성과 보상을 제공합니다.</div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // 1. 스크롤 페이드인 (Intersection Observer)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // 순차적으로 나타나도록 딜레이 추가
+                    setTimeout(() => {
+                        entry.target.classList.add('reveal');
+                    }, index * 100);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.card-3d').forEach(card => observer.observe(card));
+
+        // 2. 명확한 3D 틸트 효과 (Desktop 전용, Mobile 제외로 프레임 보호)
+        if (window.innerWidth > 768) {
+            document.querySelectorAll('.card-3d').forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = (centerY - y) / 10; // 기울기 강도
+                    const rotateY = (x - centerX) / 10;
+                    
+                    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = `rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                });
+            });
+        }
+    </script>
+</body>
+</html>
